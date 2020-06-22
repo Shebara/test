@@ -1,4 +1,25 @@
-# Vue.js task
+# test
+
+## Build Setup
+
+```bash
+# install dependencies
+$ yarn install
+
+# serve with hot reload at localhost:3000
+$ yarn dev
+
+# build for production and launch server
+$ yarn build
+$ yarn start
+
+# generate static project
+$ yarn generate
+```
+
+For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+
+# Zadatak
 
 
 Ideja je da se naprave 2 jednostavne strane koristeci postojeci api. dizajn je naravno potpuno nebitan, nema potrebe da trosis vreme na to, moze da se koristi bootstrap/bulma… 
@@ -60,8 +81,4 @@ Sve treba da bude implementirano kao singe page applikacija, koristeci sledece t
 3. Vuex - za state management aplikacije
 
 Koriscenje plugina/biblioteka je dozvoljeno, po sopstvenom nahodjenju :) 
-
-
-
-
 
