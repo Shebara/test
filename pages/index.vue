@@ -6,29 +6,48 @@
         test
       </h1>
       <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
+        <form v-if="!$store.state.loggedIn" @submit.prevent="login">
+          <input type="text" placeholder="Email" v-model="email" :class="{ 'error': $v.email.$error }" />
+          <input type="password" placeholder="Password" v-model="password" :class="{ 'error': $v.password.$error }">
+          <button type="submit">Log in</button>
+        </form>
+        <div v-else>Logged in.</div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+import Vue from 'vue'
+import Vuelidate from 'vuelidate'
+import {required, email} from 'vuelidate/lib/validators';
+
+Vue.use(Vuelidate)
+
+export default {
+    data() {
+        return {
+            email: "",
+            password: "",
+        };
+    },
+    validations: {
+        email: {
+            required,
+            email: email
+        },
+        password: {
+            required,
+        }
+    },
+    methods: {
+        async login() {
+            this.$v.$touch();
+
+            console.log(this.email, this.password);
+        }
+    }
+}
 </script>
 
 <style>
@@ -57,6 +76,11 @@ export default {}
   font-size: 100px;
   color: #35495e;
   letter-spacing: 1px;
+}
+
+input.error {
+  border-color: red;
+  background-color: lightpink;
 }
 
 .subtitle {
