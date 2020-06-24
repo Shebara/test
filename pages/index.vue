@@ -20,6 +20,7 @@
 <script>
 import Vue from 'vue'
 import Vuelidate from 'vuelidate'
+import axios from 'axios'
 import {required, email} from 'vuelidate/lib/validators';
 
 Vue.use(Vuelidate)
@@ -44,7 +45,18 @@ export default {
         async login() {
             this.$v.$touch();
 
-            console.log(this.email, this.password);
+            const result = await axios.post(`http://localhost:5000/api/login`, {
+                email: this.email,
+                password: this.password
+            });
+
+            if (result.data.token) {
+                this.$store.commit('logIn');
+                this.$store.commit('auth/setToken', {token: result.data.token});
+            } else {
+                alert('BAD CREDENTIALS!');
+            }
+            
         }
     }
 }
