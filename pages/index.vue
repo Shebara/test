@@ -11,7 +11,9 @@
           <input type="password" placeholder="Password" v-model="password" :class="{ 'error': $v.password.$error }">
           <button type="submit">Log in</button>
         </form>
-        <div v-else>Logged in.</div>
+        <div v-else>
+          <a href="#" @click.prevent="logout">Log out</a>
+        </div>
       </div>
     </div>
   </div>
@@ -57,6 +59,9 @@ export default {
                 alert('BAD CREDENTIALS!');
             }
             
+        },
+        logout() {
+          this.$store.commit('logOut');
         }
     }
 }
