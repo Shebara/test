@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div v-if="count > 0">
+    <div v-if="count > 0" class="result-list">
       <h2>Result count: {{count}}</h2>
       <ul>
         <li v-for="item in data" :key="item.id">
-          <p>Client Name: {{item.client.name}}</p>
-          <p>User Name:</p>
-          <p>Job Name:</p>
+          <p>Client Name: <strong>{{item.client.name}}</strong></p>
+          <!--<p>User Name:</p>-->
+          <!--<p>Job Name:</p>-->
           <p>Start Time: {{item.start_time}}</p>
           <p>End Time: {{item.end_time}}</p>
         </li>
@@ -85,5 +85,14 @@ export default {
   .pagination > div {
     display: inline-block;
     width: 50px;
+  }
+  .result-list ul {
+    padding-left: 0;
+    list-style-type: none;
+  }
+  .result-list ul li {
+    margin: 5px;
+    border: 1px solid #333;
+    padding: 5px;
   }
 </style>
