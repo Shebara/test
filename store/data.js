@@ -1,15 +1,9 @@
 export const state = () => ({
-    page: 0,
-    data: []
+    page: 1
 })
   
 export const mutations = {
-    setData (state, data) {
-        state.data = data;
-    },
     setPage (state, page) {
         state.page = page;
-        
-        localStorage.setItem('page', page);
     }
 }
