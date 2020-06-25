@@ -1,11 +1,13 @@
 <template>
   <div class="container">
     <div>
-      <Logo />
       <h1 class="title">
         test
       </h1>
-      <div class="links">
+      <div v-if="!$store.state.loaded" class="loading">
+        Loading...
+      </div>
+      <div v-else class="links">
         <form v-if="!$store.state.loggedIn" @submit.prevent="login">
           <input type="text" placeholder="Email" v-model="email" :class="{ 'error': $v.email.$error }" />
           <input type="password" placeholder="Password" v-model="password" :class="{ 'error': $v.password.$error }">
@@ -13,6 +15,7 @@
         </form>
         <div v-else>
           <a href="#" @click.prevent="logout">Log out</a>
+          <Content />
         </div>
       </div>
     </div>
@@ -20,19 +23,28 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import Vuelidate from 'vuelidate'
-import axios from 'axios'
+import Vue from 'vue';
+import Vuelidate from 'vuelidate';
+import axios from 'axios';
 import {required, email} from 'vuelidate/lib/validators';
+import Content from '~/components/Content';
 
-Vue.use(Vuelidate)
+Vue.use(Vuelidate);
 
 export default {
+    components: {
+        Content
+    },
     data() {
         return {
             email: "",
             password: "",
         };
+    },
+    mounted() {
+        if (process.browser) {
+            this.$store.dispatch('nuxtClientInit', this.$store);
+        }
     },
     validations: {
         email: {
@@ -54,7 +66,10 @@ export default {
 
             if (result.data.token) {
                 this.$store.commit('logIn');
-                this.$store.commit('auth/setToken', {token: result.data.token});
+                this.$store.commit('auth/setToken', result.data.token);
+
+                localStorage.setItem('loggedIn', true);
+                localStorage.setItem('authToken', result.data.token);
             } else {
                 alert('BAD CREDENTIALS!');
             }
@@ -62,6 +77,8 @@ export default {
         },
         logout() {
           this.$store.commit('logOut');
+
+          localStorage.setItem('loggedIn', false);
         }
     }
 }
@@ -71,7 +88,6 @@ export default {
 .container {
   margin: 0 auto;
   min-height: 100vh;
-  display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -110,5 +126,10 @@ input.error {
 
 .links {
   padding-top: 15px;
+}
+
+.links a {
+  display: inline-block;
+  padding-bottom: 25px;
 }
 </style>
