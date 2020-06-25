@@ -2,14 +2,14 @@
 
 ## Build Setup
 
+Requirements: nodejs, nodemon, yarn
+
 ```bash
 
 # serve with hot reload at localhost:3000, server at localhost:5000
 $ yarn dev
 
 ```
-
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
 
 # Zadatak
 
